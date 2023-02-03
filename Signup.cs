@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using loginsec;
-using System.Timers;
+using CustomerManagementSystem.UserValidation;
 
 namespace CustomerManagementSystem
 {
@@ -17,17 +17,24 @@ namespace CustomerManagementSystem
         {
             InitializeComponent();
         }
-        Connection con = new Connection();
-        public string MySqlConnectionString;
         
+        // Takes the user back to login page
         private void button1_Click(object sender, EventArgs e)
         {
             back();
         }
 
+        // submits the user details to the UserFactory class 
         private void button2_Click(object sender, EventArgs e)
         {
-            newCustomer();
+            string fName = textBox1.Text;
+            string lName = textBox2.Text;
+            string email = textBox4.Text;
+            string password = textBox5.Text;
+            string password2 = textBox6.Text;
+            // create new customer record in database from information filled out in the form
+            UserFactory signup = new UserFactory();
+            signup.NewUser(fName, lName, email, password, password2);
         }
 
         // method to return to login screen
@@ -37,50 +44,5 @@ namespace CustomerManagementSystem
             LF.Show();
             this.Hide();
         }
-
-        // create new customer record in database from information filled out in the form
-        private void newCustomer()
-        {
-            int result;
-            string fName = textBox1.Text;
-            string lName = textBox2.Text;
-            string email = textBox4.Text;
-            string password = textBox5.Text;
-            string password2 = textBox6.Text;
-
-            string query = "Insert into customer (firstname, lastname, email, password) values ('" + fName + "','" + lName + "','" + email + "','" + password + "')";
-            MySqlConnectionString = con.connectionString();
-            MySqlConnection databaseConnection = new MySqlConnection(MySqlConnectionString);
-            MySqlCommand commandDatabase;
-
-            if (fName == "" || lName == "" || password == "" || email == "" || password != password2)
-            {
-                MessageBox.Show("Please check that all information is entered correctly, and that both passwords match", "Sign up error");
-            }
-            else
-            {
-                try
-                {
-                    databaseConnection.Open();
-                    commandDatabase = new MySqlCommand();
-                    commandDatabase.Connection = databaseConnection;
-                    commandDatabase.CommandText = query;
-                    result = commandDatabase.ExecuteNonQuery();
-
-                    if (result > 0)
-                    {
-                        MessageBox.Show("Your account has been sucessfully created!" , "Welcome!");
-                        databaseConnection.Close();
-                        back();
-                        this.Close();
-                    }
-                }
-                catch (Exception a)
-                {
-                    MessageBox.Show("Query error " + a.Message);
-                }
-            }
-        }
-
     }
 }

@@ -12,7 +12,8 @@ using MySql.Data;
 using System.Net;
 using loginsec;
 using MySql.Data.MySqlClient;
-using WebPWrapper;
+
+
 
 
 namespace CustomerManagementSystem
@@ -26,17 +27,6 @@ namespace CustomerManagementSystem
         public HomePage()
         {
             InitializeComponent();
-        }
-
-        private void SetChildOffset(int offset)
-        {
-            //get all immediate children of form
-            var children = this.Controls.OfType<Control>();
-
-            foreach (Control child in children)
-            {
-                child.Location = new Point(child.Location.X + offset, child.Location.Y + offset);
-            }
         }
 
         private void HomePage_Load(object sender, EventArgs e)
@@ -72,15 +62,14 @@ namespace CustomerManagementSystem
                 url = dr["image_url"].ToString();
                 price = dr["price"].ToString();
                 stock = dr["stock_qty"].ToString();
+                /*
+                string path = "C:/Users/DJBur/Documents/CustomerManagement/CustomerManagementSystem/Images/" +id+".jpg";
 
-                var picture = new PictureBox
+                using (WebClient webClient = new WebClient())
                 {
-                    Name = "pictureBox" + counter,
-                    Size = new Size(125, 175),
-                    SizeMode = PictureBoxSizeMode.StretchImage,
-                    Location = new Point(y, x+30),
-                    ImageLocation = url,
-                };
+                    webClient.DownloadFile(url, path);
+                }
+                */
                 var title = new Label()
                 {
                     Name = "title"+counter,
@@ -89,23 +78,31 @@ namespace CustomerManagementSystem
                     Width = 125,
                     Height = 30,
                 };
+                this.Controls.Add(title);
                 var label = new Label()
                 {
                     Name = "desc"+counter,
                     Text = description,
-                    Location = new Point(y, x+205),
+                    Location = new Point(y, x+155),
                     Width = 125,
                     Height = 100,
                 };
-                this.Controls.Add(title);
                 this.Controls.Add(label);
+                var picture = new PictureBox
+                {
+                    Name = "pictureBox" + counter,
+                    Size = new Size(125, 125),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Location = new Point(y, x + 30),
+                    ImageLocation = url,
+                    WaitOnLoad = true,
+                };
                 this.Controls.Add(picture);
-
                 y += 185;
                 if (y > 615)
                 {
                     y = 60;
-                    x += 330;
+                    x += 280;
                 }
             }
             mySqlConnection.Close();

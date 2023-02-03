@@ -270,6 +270,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CartPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CartPage.Designer.cs">
+      <DependentUpon>CartPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Connection.cs" />
     <Compile Include="HomePage.cs">
       <SubType>Form</SubType>
@@ -289,6 +295,18 @@
     <Compile Include="MenuBar.Designer.cs">
       <DependentUpon>MenuBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="PaymentPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PaymentPage.Designer.cs">
+      <DependentUpon>PaymentPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductView.Designer.cs">
+      <DependentUpon>ProductView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Signup.cs">
@@ -297,7 +315,11 @@
     <Compile Include="Signup.Designer.cs">
       <DependentUpon>Signup.cs</DependentUpon>
     </Compile>
-    <Compile Include="WebPWrapper.cs" />
+    <Compile Include="UserValidation\UserFactory.cs" />
+    <Compile Include="UserValidation\IUsers.cs" />
+    <EmbeddedResource Include="CartPage.resx">
+      <DependentUpon>CartPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HomePage.resx">
       <DependentUpon>HomePage.cs</DependentUpon>
     </EmbeddedResource>
@@ -306,6 +328,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MenuBar.resx">
       <DependentUpon>MenuBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaymentPage.resx">
+      <DependentUpon>PaymentPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductView.resx">
+      <DependentUpon>ProductView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -360,6 +388,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Discounts\" />
+    <Folder Include="Orders\" />
+    <Folder Include="Payment\" />
+    <Folder Include="Products\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

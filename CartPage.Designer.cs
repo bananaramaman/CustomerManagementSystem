@@ -1,7 +1,7 @@
 ﻿
 namespace CustomerManagementSystem
 {
-    partial class HomePage
+    partial class CartPage
     {
         /// <summary>
         /// Required designer variable.
@@ -31,19 +31,17 @@ namespace CustomerManagementSystem
         {
             this.SuspendLayout();
             // 
-            // HomePage
+            // CartPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
             this.BackgroundImage = global::CustomerManagementSystem.Properties.Resources.LoginBackground;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 600);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "HomePage";
-            this.Text = "HomePage";
-            this.Load += new System.EventHandler(this.HomePage_Load);
+            this.Name = "CartPage";
+            this.Text = "CartPage";
             this.ResumeLayout(false);
 
         }

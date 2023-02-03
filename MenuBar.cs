@@ -25,11 +25,11 @@ namespace CustomerManagementSystem
             panel1.Controls.Add(HM);
             OpenChildForm(HM);
         }
-        public void OpenChildForm(Form childform)          // I took this part from Tati's Code in Admin Forms.
+        public void OpenChildForm(Form childform)
         {
             if (iconCurrentChildForm != null)
             {
-                //open a specific fomr
+                //open a specific form
                 currentChildForm.Close();
             }
             currentChildForm = childform;
@@ -39,10 +39,42 @@ namespace CustomerManagementSystem
             childform.BringToFront();
             childform.Show();
         }
+        public void CloseChildForm(Form childform)
+        {
+            currentChildForm .Close();
+        }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-           
+            CloseChildForm(currentChildForm);
+            HomePage HM = new HomePage() { TopLevel = false, TopMost = true };
+            panel1.Controls.Add(HM);
+            OpenChildForm(HM);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

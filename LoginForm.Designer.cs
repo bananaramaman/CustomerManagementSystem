@@ -49,7 +49,7 @@ namespace CustomerManagementSystem
             this.maskedTextBox1.Location = new System.Drawing.Point(292, 279);
             this.maskedTextBox1.Name = "maskedTextBox1";
             this.maskedTextBox1.Size = new System.Drawing.Size(215, 29);
-            this.maskedTextBox1.TabIndex = 1;
+            this.maskedTextBox1.TabIndex = 2;
             this.maskedTextBox1.UseSystemPasswordChar = true;
             // 
             // textBox1
@@ -59,7 +59,7 @@ namespace CustomerManagementSystem
             this.textBox1.Location = new System.Drawing.Point(292, 228);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(215, 29);
-            this.textBox1.TabIndex = 2;
+            this.textBox1.TabIndex = 1;
             // 
             // button1
             // 
@@ -71,7 +71,7 @@ namespace CustomerManagementSystem
             this.button1.Location = new System.Drawing.Point(292, 343);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(95, 40);
-            this.button1.TabIndex = 3;
+            this.button1.TabIndex = 5;
             this.button1.Text = "Sign up";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -85,7 +85,7 @@ namespace CustomerManagementSystem
             this.radioButton1.Location = new System.Drawing.Point(292, 315);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(125, 22);
-            this.radioButton1.TabIndex = 4;
+            this.radioButton1.TabIndex = 3;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Stay signed in?";
             this.radioButton1.UseVisualStyleBackColor = false;
@@ -100,7 +100,7 @@ namespace CustomerManagementSystem
             this.button2.Location = new System.Drawing.Point(412, 343);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(95, 40);
-            this.button2.TabIndex = 5;
+            this.button2.TabIndex = 4;
             this.button2.Text = "Log in";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -176,7 +176,6 @@ namespace CustomerManagementSystem
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "LoginForm";
             this.Text = "LoginForm";
-            this.Load += new System.EventHandler(this.LoginForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

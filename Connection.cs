@@ -97,6 +97,4 @@ namespace loginsec
             return -1;
         }
     }
-
-
 }

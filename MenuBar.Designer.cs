@@ -52,6 +52,7 @@ namespace CustomerManagementSystem
             this.button1.TabIndex = 23;
             this.button1.Text = "Categories";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox1
             // 
@@ -60,6 +61,7 @@ namespace CustomerManagementSystem
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(214, 39);
             this.textBox1.TabIndex = 26;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // panel1
             // 
@@ -83,6 +85,7 @@ namespace CustomerManagementSystem
             this.button3.Size = new System.Drawing.Size(140, 40);
             this.button3.TabIndex = 25;
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -98,6 +101,7 @@ namespace CustomerManagementSystem
             this.button2.Size = new System.Drawing.Size(40, 40);
             this.button2.TabIndex = 24;
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button4
             // 
@@ -114,6 +118,7 @@ namespace CustomerManagementSystem
             this.button4.TabIndex = 22;
             this.button4.Text = "-";
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // pictureBox1
             // 
