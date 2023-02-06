@@ -18,10 +18,9 @@ namespace CustomerManagementSystem
         {
             InitializeComponent();
         }
-        public void HomePage_Load(object sender, EventArgs e)
+        private void HomePage_Load(object sender, EventArgs e)
         {
-            ProductFactory PF = new ProductFactory();
-            PF.ProductDisp(this);
+            
         }
     }
 }

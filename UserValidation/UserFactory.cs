@@ -36,7 +36,7 @@ namespace CustomerManagementSystem.UserValidation
                             string em = myReader.GetString(3);
                             string pass = myReader.GetString(10);
                         }
-                        
+
                         MB.StartPosition = FormStartPosition.WindowsDefaultLocation;
                         MB.ShowDialog();
                     }

@@ -18,22 +18,28 @@ namespace CustomerManagementSystem
     public partial class MenuBar : Form
     {
         ProductFactory PF = new ProductFactory();
+        public int x = 0;
+        public string y;
+
         public MenuBar()
         {
             InitializeComponent();
             this.MouseClick += mouseClick;
         }
+
         private void MenuBar_Load(object sender, EventArgs e)
         {
             //Loads the default panel (Homepage) displays all products
             PF.NewPanel(this);
-            PF.HomePage();
+            PF.HomePage(x, y);
         }
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             //refreshes the page/ returns user to homepage
             PF.CloseChildForm(this);
-            PF.HomePage();
+            x = 0;
+            PF.HomePage(x, y);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -51,21 +57,22 @@ namespace CustomerManagementSystem
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
+        {   //displays category options
             PF.catButtons(this);
         }
-
         private void mouseClick(object sender, MouseEventArgs e)
-        {
+        {   //collapses the category drop menu on mouse click
             PF.buttonclear();
         }
 
         private void button4_Click(object sender, EventArgs e)
-        {
-            string textbox = textBox1.Text;
+        {   //product search function
+            string y = textBox1.Text;
+            string text = "%" + y + "%";
+            x = 1;
+            textBox1.Clear();
             PF.CloseChildForm(this);
-            PF.HomePage();
-            PF.prodSearch(this,textbox);
+            PF.HomePage(x, text);
         }
     }
 }
