@@ -38,7 +38,7 @@ namespace CustomerManagementSystem
             this.AutoScroll = true;
             this.BackgroundImage = global::CustomerManagementSystem.Properties.Resources.LoginBackground;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(800, 600);
+            this.ClientSize = new System.Drawing.Size(800, 475);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "HomePage";

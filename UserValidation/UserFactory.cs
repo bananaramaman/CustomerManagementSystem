@@ -12,15 +12,15 @@ namespace CustomerManagementSystem.UserValidation
 {
     class UserFactory
     {
-        LoginForm LF = new LoginForm();
         Signup SU = new Signup();
+        MenuBar MB = new MenuBar();
         Connection con = new Connection();
         public string MySqlConnectionString;
 
         // User login method
         public void UserLogin(string email, string password)
         {
-            LF.Show();
+            //LF.Show();
             try
             {
                 if (email != "" && password != "")
@@ -36,11 +36,9 @@ namespace CustomerManagementSystem.UserValidation
                             string em = myReader.GetString(3);
                             string pass = myReader.GetString(10);
                         }
-                        MenuBar MB = new MenuBar();
-                        LF.Hide();
+                        
                         MB.StartPosition = FormStartPosition.WindowsDefaultLocation;
                         MB.ShowDialog();
-                        con.Close();
                     }
                     else{
                         MessageBox.Show("Incorrect Username or Password!", "Login Page");}
