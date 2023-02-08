@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Windows.Forms;
 using CustomerManagementSystem.Products;
+using CustomerManagementSystem.Payment;
+
 
 namespace CustomerManagementSystem
 {
     public partial class ProductView : Form
     {
-        MenuBar MB = new MenuBar();
         ProductFactory PF = new ProductFactory();
         public int x = 0;
         public string y;
@@ -23,35 +24,31 @@ namespace CustomerManagementSystem
         }
         private void ProductView_Load(object sender, EventArgs e)
         {
-            
-        }
-        public void prod(string id,string name,string category,
-            string description, string url, string price, string stock)
-        {
-            Title1.Text = name;
-            cat1.Text = category;
-            desc.Text = description;
-            pictureBox1.ImageLocation = url;
-            Price1.Text = "$"+price;
-            Stock1.Text = stock;
+            int stock = Convert.ToInt32(Stock1.Text);
+            QTY.Maximum = stock;
         }
         private void back_Click(object sender, EventArgs e)
         {
             this.Close();
-            PF.NewPanel(MB);
-            PF.HomePage(x,y);
+            PF.HomePage(x, y);
         }
 
         private void buynow_Click(object sender, EventArgs e)
         {
-
+            this.Close();
+            PF.Payment();
         }
 
         private void addtocart_Click(object sender, EventArgs e)
         {
-            CartPage CP = new CartPage();
-            PF.CloseChildForm(this);
-            PF.shopCart();
+            string Desc = Title1.Text;
+            
+            string ID = id.Text;
+            int quant = Convert.ToInt32(QTY.Value);
+            double price = Convert.ToDouble(Price1.Text) * quant;
+            PaymentFactory PP = new PaymentFactory();
+            PP.CartContents(Desc, price, ID, quant);
+            
         }
     }
 }

@@ -24,20 +24,19 @@ namespace CustomerManagementSystem
         public MenuBar()
         {
             InitializeComponent();
+            PF.NewPanel(this);
             this.MouseClick += mouseClick;
         }
 
         private void MenuBar_Load(object sender, EventArgs e)
         {
             //Loads the default panel (Homepage) displays all products
-            PF.NewPanel(this);
             PF.HomePage(x, y);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             //refreshes the page/ returns user to homepage
-            PF.CloseChildForm(this);
             x = 0;
             PF.HomePage(x, y);
         }
@@ -45,14 +44,12 @@ namespace CustomerManagementSystem
         private void button3_Click(object sender, EventArgs e)
         {
             //calls the user profile page into the main panel
-            PF.CloseChildForm(this);
             PF.UserProfile();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             //loads the shopping cart into the main panel
-            PF.CloseChildForm(this);
             PF.shopCart();
         }
 
@@ -71,7 +68,6 @@ namespace CustomerManagementSystem
             string text = "%" + y + "%";
             x = 1;
             textBox1.Clear();
-            PF.CloseChildForm(this);
             PF.HomePage(x, text);
         }
     }

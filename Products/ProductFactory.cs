@@ -18,17 +18,16 @@ namespace CustomerManagementSystem.Products
     {
         public string MySqlConnectionString;
         Connection con = new Connection();
-        public Form currentChildForm;
-        public object iconCurrentChildForm;
-        public Panel panel;
+        public static Form currentChildForm;
+        public static Panel panel;
         public Panel Catbox;
         public Button button;
         public int counter = 0;
+
         public void OpenChildForm(Form childform)
         {
-            if (iconCurrentChildForm != null)
+            if (currentChildForm != null)
             {
-                //open a specific form
                 currentChildForm.Close();
             }
             currentChildForm = childform;
@@ -38,14 +37,12 @@ namespace CustomerManagementSystem.Products
             childform.BringToFront();
             childform.Show();
         }
-
-        public void CloseChildForm(Form childform)
-        {
-            currentChildForm.Close();
-        }
-
         public void NewPanel(Form MB)
         {
+            if (panel != null)
+            {
+                panel.Dispose();
+            }
             panel = new Panel()
             {
                 AutoSize = true,
@@ -58,7 +55,6 @@ namespace CustomerManagementSystem.Products
                 BackgroundImageLayout = ImageLayout.Stretch,
             };
             MB.Controls.Add(panel);
-            return;
         }
         // displays the user shopping cart
         public void shopCart()
@@ -67,6 +63,13 @@ namespace CustomerManagementSystem.Products
             panel.Controls.Add(CP);
             OpenChildForm(CP);
         }
+        // displays the user shopping cart
+        public void Payment()
+        {
+            PaymentPage PP = new PaymentPage() { TopLevel = false, TopMost = true };
+            panel.Controls.Add(PP);
+            OpenChildForm(PP);
+        }
         // displays the user profile page
         public void UserProfile()
         {
@@ -74,19 +77,17 @@ namespace CustomerManagementSystem.Products
             panel.Controls.Add(UP);
             OpenChildForm(UP);
         }
+        // picture click event handler. Displays product page
+        void picture_Click(object sender, EventArgs e)
+        {
+            string name = (((System.Windows.Forms.PictureBox)sender).Name);
+            ProductPage(name);
+        }
         //Displays product page
         public void ProductPage(string name)
         {
             ProductView PV = new ProductView() { TopLevel = false, TopMost = true };
-            panel.Controls.Add(PV);
-            OpenChildForm(PV);
             string query = "select product_id, prod_name, prod_category, prod_description, image_url, price, stock_qty from customer_management.products where prod_name = '" + name + "';";
-            string id;
-            string category;
-            string description;
-            string url;
-            string price;
-            string stock;
             try
             {
                 con.Open();
@@ -96,17 +97,18 @@ namespace CustomerManagementSystem.Products
                 {
                     while (dr.Read())
                     {
-                        id = dr["product_id"].ToString();
-                        name = dr["prod_name"].ToString();
-                        category = dr["prod_category"].ToString();
-                        description = dr["prod_description"].ToString();
-                        url = dr["image_url"].ToString();
-                        price = dr["price"].ToString();
-                        stock = dr["stock_qty"].ToString();
-
-                        PV.prod(id, name, category, description, url, price, stock);
+                        PV.Title1.Text = dr["prod_name"].ToString();
+                        PV.cat1.Text = dr["prod_category"].ToString();
+                        PV.desc.Text = dr["prod_description"].ToString();
+                        PV.pictureBox1.ImageLocation = dr["image_url"].ToString();
+                        PV.Price1.Text = dr["price"].ToString();
+                        PV.Stock1.Text = dr["stock_qty"].ToString();
+                        PV.id.Text = dr["product_id"].ToString();
+                        
+                        panel.Controls.Add(PV);
+                        OpenChildForm(PV);
                     }
-                    con.Close();
+                    
                 }
                 else{
                     MessageBox.Show("Connection Error!", "Database Information");}
@@ -119,7 +121,7 @@ namespace CustomerManagementSystem.Products
         public void HomePage(int x,string y)
         {
             HomePage HP = new HomePage() { TopLevel = false, TopMost = true };
-            panel.Controls.Add(HP);
+            
             if (x > 0)
             {
                 string query = "select product_id, prod_name, prod_category, prod_description, image_url, price, stock_qty from customer_management.products where prod_name like '" + y + "';";
@@ -206,7 +208,6 @@ namespace CustomerManagementSystem.Products
             string price;
             string stock;
             
-            OpenChildForm(HP);
             MySqlConnectionString = con.connectionString();
             MySqlConnection mySqlConnection = new MySqlConnection(MySqlConnectionString);
             MySqlCommand cmd = new MySqlCommand(query, mySqlConnection);
@@ -275,14 +276,9 @@ namespace CustomerManagementSystem.Products
             {
                 MessageBox.Show("Query error " + a.Message);
             }
-        }
-        // picture click event handler. Displays product page
-        void picture_Click(object sender, EventArgs e)
-        {
-            string name = (((System.Windows.Forms.PictureBox)sender).Name);
-            MenuBar MB = new MenuBar();
-            CloseChildForm(MB);
-            ProductPage(name);
+            OpenChildForm(HP);
+            panel.Controls.Add(HP);
+            
         }
     }
 }

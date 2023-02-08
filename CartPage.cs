@@ -7,14 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CustomerManagementSystem.Products;
+using CustomerManagementSystem.Payment;
 
 namespace CustomerManagementSystem
 {
     public partial class CartPage : Form
     {
+        ProductFactory PF = new ProductFactory();
+        public int x = 0;
+        public string y;
         public CartPage()
         {
             InitializeComponent();
+        }
+
+        private void back_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            PF.HomePage(x, y);
         }
     }
 }
