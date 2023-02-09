@@ -116,7 +116,7 @@ namespace CustomerManagementSystem.Payment
                         Height = 20,
                         Width = 50,
                     };
-                    NumericUpDown.Click += new EventHandler(CartRefresh);
+                    //NumericUpDown.Click += new EventHandler(CartRefresh);
                     CP.Controls.Add(qtylabel);
                     // register the event handler for this picture box
                     y = 0;

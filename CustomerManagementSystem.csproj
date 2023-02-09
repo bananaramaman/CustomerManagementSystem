@@ -324,7 +324,6 @@
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
     <Compile Include="UserValidation\UserFactory.cs" />
-    <Compile Include="UserValidation\IUsers.cs" />
     <EmbeddedResource Include="CartPage.resx">
       <DependentUpon>CartPage.cs</DependentUpon>
     </EmbeddedResource>
