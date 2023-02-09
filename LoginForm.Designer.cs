@@ -46,9 +46,10 @@ namespace CustomerManagementSystem
             // 
             this.maskedTextBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.maskedTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.maskedTextBox1.Location = new System.Drawing.Point(292, 279);
+            this.maskedTextBox1.Location = new System.Drawing.Point(389, 343);
+            this.maskedTextBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(215, 29);
+            this.maskedTextBox1.Size = new System.Drawing.Size(285, 34);
             this.maskedTextBox1.TabIndex = 2;
             this.maskedTextBox1.UseSystemPasswordChar = true;
             // 
@@ -56,9 +57,10 @@ namespace CustomerManagementSystem
             // 
             this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(292, 228);
+            this.textBox1.Location = new System.Drawing.Point(389, 281);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(215, 29);
+            this.textBox1.Size = new System.Drawing.Size(285, 34);
             this.textBox1.TabIndex = 1;
             // 
             // button1
@@ -68,9 +70,10 @@ namespace CustomerManagementSystem
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button1.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.button1.Location = new System.Drawing.Point(292, 343);
+            this.button1.Location = new System.Drawing.Point(389, 422);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(95, 40);
+            this.button1.Size = new System.Drawing.Size(127, 49);
             this.button1.TabIndex = 5;
             this.button1.Text = "Sign up";
             this.button1.UseVisualStyleBackColor = false;
@@ -82,9 +85,10 @@ namespace CustomerManagementSystem
             this.radioButton1.AutoSize = true;
             this.radioButton1.BackColor = System.Drawing.Color.Transparent;
             this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(292, 315);
+            this.radioButton1.Location = new System.Drawing.Point(389, 388);
+            this.radioButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(125, 22);
+            this.radioButton1.Size = new System.Drawing.Size(158, 28);
             this.radioButton1.TabIndex = 3;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Stay signed in?";
@@ -97,9 +101,10 @@ namespace CustomerManagementSystem
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button2.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.button2.Location = new System.Drawing.Point(412, 343);
+            this.button2.Location = new System.Drawing.Point(549, 422);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(95, 40);
+            this.button2.Size = new System.Drawing.Size(127, 49);
             this.button2.TabIndex = 4;
             this.button2.Text = "Log in";
             this.button2.UseVisualStyleBackColor = false;
@@ -111,9 +116,10 @@ namespace CustomerManagementSystem
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(289, 207);
+            this.label2.Location = new System.Drawing.Point(385, 255);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 18);
+            this.label2.Size = new System.Drawing.Size(57, 24);
             this.label2.TabIndex = 6;
             this.label2.Text = "Email";
             // 
@@ -123,9 +129,10 @@ namespace CustomerManagementSystem
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(289, 260);
+            this.label3.Location = new System.Drawing.Point(385, 320);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 18);
+            this.label3.Size = new System.Drawing.Size(92, 24);
             this.label3.TabIndex = 7;
             this.label3.Text = "Password";
             // 
@@ -135,9 +142,10 @@ namespace CustomerManagementSystem
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBox1.Image = global::CustomerManagementSystem.Properties.Resources.LOGO;
-            this.pictureBox1.Location = new System.Drawing.Point(165, 92);
+            this.pictureBox1.Location = new System.Drawing.Point(220, 113);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(471, 52);
+            this.pictureBox1.Size = new System.Drawing.Size(628, 64);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
@@ -147,22 +155,23 @@ namespace CustomerManagementSystem
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("VHS Glitch 1", 16F, System.Drawing.FontStyle.Bold);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(258, 157);
+            this.label1.Location = new System.Drawing.Point(344, 193);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(301, 22);
+            this.label1.Size = new System.Drawing.Size(296, 31);
             this.label1.TabIndex = 9;
             this.label1.Text = "SHOP THE FUTURE!";
             // 
             // LoginForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackgroundImage = global::CustomerManagementSystem.Properties.Resources.LoginBackground;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(800, 600);
+            this.ClientSize = new System.Drawing.Size(1067, 738);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
@@ -174,6 +183,7 @@ namespace CustomerManagementSystem
             this.Controls.Add(this.maskedTextBox1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "LoginForm";
             this.Text = "LoginForm";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

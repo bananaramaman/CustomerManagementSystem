@@ -21,9 +21,9 @@ namespace CustomerManagementSystem
         // Login in button - Passes user entered email & password to UserFactory for verification
         private void button2_Click(object sender, EventArgs e)
         {
+            this.Hide();
             string email = textBox1.Text;
             string password = maskedTextBox1.Text;
-            this.Hide();
             UserFactory user = new UserFactory();
             user.UserLogin(email, password);
         }

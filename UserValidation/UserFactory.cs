@@ -36,12 +36,12 @@ namespace CustomerManagementSystem.UserValidation
                             string em = myReader.GetString(3);
                             string pass = myReader.GetString(10);
                         }
-
                         MB.StartPosition = FormStartPosition.WindowsDefaultLocation;
                         MB.ShowDialog();
                     }
                     else{
-                        MessageBox.Show("Incorrect Username or Password!", "Login Page");}
+                        MessageBox.Show("Incorrect Username or Password!", "Login Page");
+                    }
                 }
                 else{
                     MessageBox.Show("Username or Password is empty!", "Login Page");}

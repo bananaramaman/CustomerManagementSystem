@@ -21,11 +21,22 @@ namespace CustomerManagementSystem
         {
             InitializeComponent();
         }
+        private void CartPage_Load(object sender, EventArgs e)
+        {
+            PaymentFactory PP = new PaymentFactory();
+            PP.CartList(this);
+        }
 
         private void back_Click(object sender, EventArgs e)
         {
             this.Close();
             PF.HomePage(x, y);
+        }
+
+        private void refresh_Click(object sender, EventArgs e)
+        {
+            PaymentFactory PP = new PaymentFactory();
+            PP.CartRefresh(sender, e);
         }
     }
 }
