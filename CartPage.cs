@@ -35,8 +35,14 @@ namespace CustomerManagementSystem
 
         private void refresh_Click(object sender, EventArgs e)
         {
-            PaymentFactory PP = new PaymentFactory();
-            PP.CartRefresh(sender, e);
+            this.Close();
+            PF.shopCart();
+        }
+
+        private void Checkout_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            PF.Payment();
         }
     }
 }

@@ -16,7 +16,14 @@ namespace CustomerManagementSystem.UserValidation
         MenuBar MB = new MenuBar();
         Connection con = new Connection();
         public string MySqlConnectionString;
+        public string id;
+        public string userId 
+        { 
+            get => userId; 
+            set => userId = id; 
+        }
 
+        
         // User login method
         public void UserLogin(string email, string password)
         {
@@ -34,17 +41,21 @@ namespace CustomerManagementSystem.UserValidation
                         while (myReader.Read())
                         {
                             string em = myReader.GetString(3);
-                            string pass = myReader.GetString(10);
+                            string pass = myReader.GetString(11);
+                            id = myReader.GetString(0);
                         }
+                        con.Close();
                         MB.StartPosition = FormStartPosition.WindowsDefaultLocation;
                         MB.ShowDialog();
                     }
                     else{
                         MessageBox.Show("Incorrect Username or Password!", "Login Page");
+                        con.Close();
                     }
                 }
                 else{
-                    MessageBox.Show("Username or Password is empty!", "Login Page");}
+                    MessageBox.Show("Username or Password is empty!", "Login Page"); con.Close();
+                }
             }
             catch{
                 MessageBox.Show("Connection Error!", "Database Information");}

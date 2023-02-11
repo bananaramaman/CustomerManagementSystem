@@ -45,10 +45,9 @@ namespace CustomerManagementSystem
             
             string ID = id.Text;
             int quant = Convert.ToInt32(QTY.Value);
-            double price = Convert.ToDouble(Price1.Text) * quant;
+            double price = Convert.ToDouble(Price1.Text);
             PaymentFactory PP = new PaymentFactory();
             PP.CartContents(Desc, price, ID, quant);
-            
         }
     }
 }
