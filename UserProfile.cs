@@ -6,24 +6,24 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using loginsec;
-using System.Net;
-using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using CustomerManagementSystem.UserValidation;
 using CustomerManagementSystem.Products;
+using System.Media;
+
 
 namespace CustomerManagementSystem
 {
     public partial class UserProfile : Form
     {
-        ProductFactory PF = new ProductFactory();
+        
         public int x = 0;
         public string y;
 
         public UserProfile()
         {
             InitializeComponent();
+            
         }
 
         private void UserProfile_Load(object sender, EventArgs e)
@@ -37,13 +37,20 @@ namespace CustomerManagementSystem
         private void back_Click(object sender, EventArgs e)
         {
             this.Close();
+            ProductFactory PF = new ProductFactory();
             PF.HomePage(x, y);
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
+            
             UserFactory UF = new UserFactory();
             UF.UserProfile(this);
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SoundPlayer simpleSound = new SoundPlayer(@"C:\\Audio\Pain.mp3");
+            simpleSound.Play();
         }
     }
 }
