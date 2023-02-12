@@ -19,6 +19,8 @@ namespace CustomerManagementSystem
         ProductFactory PF = new ProductFactory();
         public int x = 0;
         public string y;
+        public int delivery;
+        
         public PaymentPage()
         {
             InitializeComponent();
@@ -35,6 +37,7 @@ namespace CustomerManagementSystem
         {
             if (radioButton1.Checked)
             {
+                delivery = 10;
                 addressLabel.Visible = true;
                 label3.Visible = true;
                 textBox1.Visible = true;
@@ -51,6 +54,7 @@ namespace CustomerManagementSystem
             }
             else if (radioButton2.Checked)
             {
+                delivery = 0;
                 addressLabel.Visible = false;
                 label3.Visible = false;
                 textBox1.Visible = false;
@@ -74,16 +78,36 @@ namespace CustomerManagementSystem
         }
         private void ConfirmOrder_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(dateTimePicker1.Text);
             string street = textBox1.Text;
             string suburb = textBox2.Text;
             string city = textBox3.Text;
             string postcode = textBox5.Text;
             string Phone = textBox4.Text;
             string country = comboBox1.Text;
-            string DOB = dateTimePicker1.Text;
+            DateTime DOB = dateTimePicker1.Value;
+            string dob = dateTimePicker1.Text;
+            string paymentMeth = comboBox2.Text;
+            string cardName = textBox6.Text;
+            string cardNum = textBox7.Text;
+            string cardExp = textBox9.Text;
+            string cardCVS = textBox8.Text;
+
             OrderFactory OF = new OrderFactory();
-            OF.UserPurchase(street,suburb,city,postcode,Phone,country,DOB);
+            OF.UserPurchase(this,street,suburb,city,postcode,Phone,country,DOB,dob,paymentMeth,cardName,cardNum,cardExp,cardCVS,delivery);
+
+            string Dis = OrderFactory.Discount;
+            int Del = OrderFactory.Delivery;
+            double Total = Math.Round(OrderFactory.TotalBill, 2);
+            label17.Text = "$"+Del.ToString();
+            label18.Text = Dis.ToString()+"%";
+            label19.Text = "$" + Total.ToString();
+            button1.Visible = true;
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            OrderFactory OF = new OrderFactory();
+            OF.OrderEnter();
+            PF.HomePage(x, y);
         }
     }
 }

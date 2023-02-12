@@ -20,7 +20,7 @@ namespace CustomerManagementSystem.Payment
         Connection con = new Connection();
 
         public void CartContents(string desc, double price, string ID, int qty)
-        {   //adds items to the cart database 
+        {   //adds items to the order_item table database 
             int result;
             string query = "Insert into order_item (description, price, product_id, quantity) values ('" + desc + "','" + price + "','" + ID + "','" + qty + "')";
             MySqlConnectionString = con.connectionString();
@@ -44,6 +44,7 @@ namespace CustomerManagementSystem.Payment
                 MessageBox.Show("Query error " + a.Message);
             }
         }
+
         void qty_changed(object sender, EventArgs e)
         {   // refreshes the cart either removing items where qty == 0, or updating price based on new quantities
 

@@ -19,32 +19,187 @@ namespace CustomerManagementSystem.Orders
     {
         public string MySqlConnectionString;
         public int x = 0;
-        public string userId
+        public static double total;
+        public static int discountid;
+        public static string orderid;
+
+        public static string disPer;
+        public static double final;
+        public static int deliveryFee;
+        public static string Discount
         {
-            get => userId;
+            get { return disPer; }
+            set { Discount = disPer; }
         }
-        Connection con = new Connection();
-        public void UserPurchase(string street, string suburb, string city, string postcode, string Phone, string country, string DOB)
+        public static int Delivery
         {
-            
-            MessageBox.Show(userId);
+            get { return deliveryFee; }
+            set { Delivery = deliveryFee; }
+        }
+        public static double TotalBill
+        {
+            get { return final; }
+            set { TotalBill = final; }
+        }
+
+        Connection con = new Connection();
+        public void UserPurchase(Form PP,string street, string suburb, string city, string postcode, string Phone, string country, DateTime DOB,string dob,string paymentMeth,string cardName, string cardNum,string cardExp,string cardCVS,int delivery)
+        {  
+            //updates user database with the users address details and payment details etc
+            string userId = UserFactory.id;
             int result;
-            string query = "update customer_management.customer set dob = '" + DOB + "',phonenumber = '" + Phone +
-                "',street = '" + street + "',suburb = '" + suburb + "',city = '" + city + "', country = '" + country + "' where customer_id = '" + userId + "'";
+            var date = DateTime.Today;
+            var age = date.Year - DOB.Year;
+            int day = (int)DateTime.Now.DayOfWeek;
+            deliveryFee = delivery;
+            int x = 0;
+
+            // calculate users age
+            if (DOB.Date > date.AddYears(-age)) 
+            {
+                age--;
+            }
+            // Logic for calculating the discount to be applied on the order
+            if (age >= 60)
+            {
+                x+= 10;
+            }
+            if (day == 0 || day == 6)
+            {
+                x += 2;
+            }
+            if (city == "auckland" || city == "Auckland" || city == "wellington" || city == "Wellington")
+            {
+                x += 1;
+            }
+            
+            //  Enter user details into the database
+            string query = "update customer_management.customer set dob = '" + dob + "',phonenumber = '" + Phone +
+                "',street = '" + street + "',suburb = '" + suburb + "',city = '" + city + "',postcode = '" +postcode+"',country = '" + country + "' where customer_id = '" + userId + "'";
             MySqlConnectionString = con.connectionString();
             MySqlConnection databaseConnection = new MySqlConnection(MySqlConnectionString);
             MySqlCommand commandDatabase;
+            if (street == null || suburb == null || Phone == null || city == null || postcode == null || country == null)
+            {
+                MessageBox.Show("Please check that all information is entered correctly", "Error");
+            }
+            else
+            {
+                try
+                {
+                    databaseConnection.Open();
+                    commandDatabase = new MySqlCommand();
+                    commandDatabase.Connection = databaseConnection;
+                    commandDatabase.CommandText = query;
+                    result = commandDatabase.ExecuteNonQuery();
+
+                    if (result > 0)
+                    {
+                        databaseConnection.Close();
+                    }
+                }
+                catch (Exception a)
+                {
+                    MessageBox.Show("Query error " + a.Message);
+                    databaseConnection.Close();
+                }
+            }
+            // Display discount amount
+            string query1 = "select discount_id ,discount_amount from customer_management.discount where discount_amount = '" + x + "'";
+            try
+            {
+                con.Open();
+                MySqlDataReader dr;
+                dr = con.ExecuteReader(query1);
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        disPer = dr["discount_amount"].ToString();
+                        discountid = Convert.ToInt32(dr["discount_id"]);
+                        if (x > 0)
+                        {
+                            MessageBox.Show("Congratulations, a discount of " + disPer + "% has been added to your order", "Discount");
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Connection Error!", "Database Information");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Connection Error!", "Database Information");
+            }
+            // adding delivery costs, discount, tax, and totals to order 
+            double discAmount = total * Convert.ToInt16(disPer) / 100;
+            final = (total + delivery) - discAmount;
+            con.Close();
+        }
+
+        public void OrderEnter()
+        {
+            int result;
+            int counter = 0;
+            string orderitemid;
+            string userId = UserFactory.id;
+            var date = DateTime.Now;
+            string Cdate = date.ToString("yyyy-MM-dd");
+            int active = 1;
+            string query1 = "Insert into orders (discount_id, total, created_date, active) values ('" + discountid + "','" + final + "','" + Cdate + "','" + active + "')";
+            string query2 = "select max(order_id) from customer_management.orders";
+
+            MySqlConnectionString = con.connectionString();
+            MySqlConnection databaseConnection = new MySqlConnection(MySqlConnectionString);
+            MySqlCommand cmd;
+            DataTable dt = new DataTable();
             try
             {
                 databaseConnection.Open();
-                commandDatabase = new MySqlCommand();
-                commandDatabase.Connection = databaseConnection;
-                commandDatabase.CommandText = query;
-                result = commandDatabase.ExecuteNonQuery();
-
+                cmd = new MySqlCommand();
+                cmd.Connection = databaseConnection;
+                cmd.CommandText = query1;
+                result = cmd.ExecuteNonQuery();
                 if (result > 0)
                 {
-                    MessageBox.Show("Your account has been sucessfully created!", "Welcome!");
+                    //databaseConnection.Close();
+                    con.Open();
+                    MySqlDataReader dr;
+                    dr = con.ExecuteReader(query2);
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            orderid = dr["max(order_id)"].ToString();
+                        }
+                    }
+                }
+                string query = "select order_item_id from customer_management.order_item;";
+                cmd.CommandText = query;
+                dt.Load(cmd.ExecuteReader());
+                foreach (DataRow DR in dt.Rows)
+                {
+                    result = 0;
+                    counter += 1;
+                    orderitemid = DR["order_item_id"].ToString();
+
+                    string query3 = "Insert into order_items (order_id, order_item_id) values ('" + orderid + "','" + orderitemid + "');";
+                    cmd.CommandText = query3;
+                    result = cmd.ExecuteNonQuery();
+                }
+                if (counter == 0)
+                {
+                    con.Close();
+                }
+                string query4 = "Insert into customer_orders (customer_id, order_id) values ('" + userId + "','" + orderid + "')";
+                cmd = new MySqlCommand();
+                cmd.Connection = databaseConnection;
+                cmd.CommandText = query4;
+                result = cmd.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    MessageBox.Show("Your order has been sucessfully processed!", "Thank you!");
                     databaseConnection.Close();
                 }
             }
@@ -65,7 +220,6 @@ namespace CustomerManagementSystem.Orders
             string description;
             string price;
             string qty;
-            double total = 0;
             double Unittotal;
             MySqlConnectionString = con.connectionString();
             MySqlConnection mySqlConnection = new MySqlConnection(MySqlConnectionString);
@@ -129,16 +283,6 @@ namespace CustomerManagementSystem.Orders
                     return;
                 }
                 mySqlConnection.Close();
-                string final = Convert.ToString(total);
-                var Total = new Label()
-                {
-                    Name = "total",
-                    Text = final,
-                    Location = new Point(548, 235),
-                    Height = 20,
-                    Width = 50,
-                };
-                PP.Controls.Add(Total);
             }
             catch (Exception a)
             {
