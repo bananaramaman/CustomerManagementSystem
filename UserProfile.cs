@@ -47,9 +47,10 @@ namespace CustomerManagementSystem
             UserFactory UF = new UserFactory();
             UF.UserProfile(this);
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            SoundPlayer simpleSound = new SoundPlayer(@"C:\\Audio\Pain.mp3");
+            SoundPlayer simpleSound = new SoundPlayer(@"C:\Users\DJBur\Documents\CustomerManagement\CustomerManagementSystem\Audio\Pain.wav");
             simpleSound.Play();
         }
     }

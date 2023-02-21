@@ -21,6 +21,7 @@ namespace CustomerManagementSystem
         public ProductView()
         {
             InitializeComponent();
+            
         }
         private void ProductView_Load(object sender, EventArgs e)
         {
@@ -35,6 +36,12 @@ namespace CustomerManagementSystem
 
         private void buynow_Click(object sender, EventArgs e)
         {
+            string Desc = Title1.Text;
+            string ID = id.Text;
+            int quant = Convert.ToInt32(QTY.Value);
+            double price = Convert.ToDouble(Price1.Text);
+            PaymentFactory PP = new PaymentFactory();
+            PP.CartContents(Desc, price, ID, quant);
             this.Close();
             PF.Payment();
         }
@@ -42,7 +49,6 @@ namespace CustomerManagementSystem
         private void addtocart_Click(object sender, EventArgs e)
         {
             string Desc = Title1.Text;
-            
             string ID = id.Text;
             int quant = Convert.ToInt32(QTY.Value);
             double price = Convert.ToDouble(Price1.Text);

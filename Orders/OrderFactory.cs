@@ -12,6 +12,7 @@ using System.Net;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using CustomerManagementSystem.UserValidation;
+using CustomerManagementSystem.Payment;
 
 namespace CustomerManagementSystem.Orders
 {
@@ -41,8 +42,8 @@ namespace CustomerManagementSystem.Orders
             get { return final; }
             set { TotalBill = final; }
         }
-
         Connection con = new Connection();
+
         public void UserPurchase(Form PP,string street, string suburb, string city, string postcode, string Phone, string country, DateTime DOB,string dob,string paymentMeth,string cardName, string cardNum,string cardExp,string cardCVS,int delivery)
         {  
             //updates user database with the users address details and payment details etc
@@ -53,6 +54,7 @@ namespace CustomerManagementSystem.Orders
             int day = (int)DateTime.Now.DayOfWeek;
             deliveryFee = delivery;
             int x = 0;
+            double discAmount = 0;
 
             // calculate users age
             if (DOB.Date > date.AddYears(-age)) 
@@ -72,7 +74,6 @@ namespace CustomerManagementSystem.Orders
             {
                 x += 1;
             }
-            
             //  Enter user details into the database
             string query = "update customer_management.customer set dob = '" + dob + "',phonenumber = '" + Phone +
                 "',street = '" + street + "',suburb = '" + suburb + "',city = '" + city + "',postcode = '" +postcode+"',country = '" + country + "' where customer_id = '" + userId + "'";
@@ -104,7 +105,7 @@ namespace CustomerManagementSystem.Orders
                     databaseConnection.Close();
                 }
             }
-            // Display discount amount
+            // Display discount amount and final to pay plus delivery if applicable
             string query1 = "select discount_id ,discount_amount from customer_management.discount where discount_amount = '" + x + "'";
             try
             {
@@ -120,6 +121,7 @@ namespace CustomerManagementSystem.Orders
                         if (x > 0)
                         {
                             MessageBox.Show("Congratulations, a discount of " + disPer + "% has been added to your order", "Discount");
+                            discAmount = (total * Convert.ToInt16(disPer)) / 100;
                         }
                     }
                 }
@@ -133,13 +135,12 @@ namespace CustomerManagementSystem.Orders
                 MessageBox.Show("Connection Error!", "Database Information");
             }
             // adding delivery costs, discount, tax, and totals to order 
-            double discAmount = total * Convert.ToInt16(disPer) / 100;
             final = (total + delivery) - discAmount;
             con.Close();
         }
-
         public void OrderEnter()
         {
+            // finalises the order process by entering details from the order into appropriate DB tables
             int result;
             int counter = 0;
             string orderitemid;
@@ -211,10 +212,63 @@ namespace CustomerManagementSystem.Orders
         public void Orderlist(Form PP)
         {
             // displays all items in the cart on the cart page, including name, price and quantitiy
-            string query = "select order_item_id, product_id, description, price, quantity from customer_management.order_item";
-            int counter = 0;
+            
             int x = 100;
             int y = 0;
+            double Unittotal = 0;
+            
+            List<string> desc = PaymentFactory.descList;
+            List<double> price = PaymentFactory.priceList;
+            List<string> id = PaymentFactory.idList;
+            List<int> qty = PaymentFactory.qtyList;
+            
+            for (int i = 0; i < desc.Count; i++)
+            {
+                var ID = new Label()
+                {
+                    Name = "id" + id,
+                    Text = id[i],
+                    Location = new Point(y + 45, x),
+                    Height = 20,
+                    Width = 20,
+                };
+                PP.Controls.Add(ID);
+                var title = new Label()
+                {
+                    Name = "title" + id,
+                    Text = desc[i],
+                    Location = new Point(y + 70, x),
+                    Height = 20,
+                    Width = 350,
+                };
+                PP.Controls.Add(title);
+                var qtylabel = new Label()
+                {
+                    Name = id[i],
+                    Text = qty[i].ToString(),
+                    Location = new Point(y + 520, x),
+                    Height = 20,
+                    Width = 50,
+                };
+                PP.Controls.Add(qtylabel);
+                Unittotal = price[i] * Convert.ToInt32(qty[i]);
+                var UnitTlabel = new Label()
+                {
+                    Name = "unittotal",
+                    Text = Convert.ToString(Unittotal),
+                    Location = new Point(y + 680, x),
+                    Height = 20,
+                    Width = 50
+                };
+                PP.Controls.Add(UnitTlabel);
+                y = 0;
+                x += 20;
+                total += Unittotal;
+            }
+
+
+
+            /*
             string id;
             string prodid;
             string description;
@@ -288,6 +342,7 @@ namespace CustomerManagementSystem.Orders
             {
                 MessageBox.Show("Query error " + a.Message);
             }
+            */
         }
     }
 }
