@@ -27,6 +27,11 @@ namespace CustomerManagementSystem.Orders
         public static string disPer;
         public static double final;
         public static int deliveryFee;
+
+        List<string> desc = PaymentFactory.descList;
+        List<double> price = PaymentFactory.priceList;
+        List<string> id = PaymentFactory.idList;
+        List<int> qty = PaymentFactory.qtyList;
         public static string Discount
         {
             get { return disPer; }
@@ -55,6 +60,7 @@ namespace CustomerManagementSystem.Orders
             deliveryFee = delivery;
             int x = 0;
             double discAmount = 0;
+            final = 0;
 
             // calculate users age
             if (DOB.Date > date.AddYears(-age)) 
@@ -142,7 +148,6 @@ namespace CustomerManagementSystem.Orders
         {
             // finalises the order process by entering details from the order into appropriate DB tables
             int result;
-            int counter = 0;
             string orderitemid;
             string userId = UserFactory.id;
             var date = DateTime.Now;
@@ -150,7 +155,8 @@ namespace CustomerManagementSystem.Orders
             int active = 1;
             string query1 = "Insert into orders (discount_id, total, created_date, active) values ('" + discountid + "','" + final + "','" + Cdate + "','" + active + "')";
             string query2 = "select max(order_id) from customer_management.orders";
-
+           
+            // calls the user id from the database to ensure correct order - customer relation
             MySqlConnectionString = con.connectionString();
             MySqlConnection databaseConnection = new MySqlConnection(MySqlConnectionString);
             MySqlCommand cmd;
@@ -164,7 +170,6 @@ namespace CustomerManagementSystem.Orders
                 result = cmd.ExecuteNonQuery();
                 if (result > 0)
                 {
-                    //databaseConnection.Close();
                     con.Open();
                     MySqlDataReader dr;
                     dr = con.ExecuteReader(query2);
@@ -175,23 +180,29 @@ namespace CustomerManagementSystem.Orders
                             orderid = dr["max(order_id)"].ToString();
                         }
                     }
+                    dr.Close();
                 }
-                string query = "select order_item_id from customer_management.order_item;";
-                cmd.CommandText = query;
-                dt.Load(cmd.ExecuteReader());
-                foreach (DataRow DR in dt.Rows)
+                // enter the individual order items into the database order_item table 
+                for (int i = 0; i < desc.Count; i++)
                 {
-                    result = 0;
-                    counter += 1;
-                    orderitemid = DR["order_item_id"].ToString();
-
-                    string query3 = "Insert into order_items (order_id, order_item_id) values ('" + orderid + "','" + orderitemid + "');";
-                    cmd.CommandText = query3;
+                    string queryorder = "Insert into order_item (description, price, product_id, quantity) values ('" +desc[i]+"','" +price[i]+"','" +id[i]+"','" +qty[i]+"')";
+                    con.Open();
+                    cmd.CommandText = queryorder;
                     result = cmd.ExecuteNonQuery();
-                }
-                if (counter == 0)
-                {
-                    con.Close();
+                    // get the latest order item id and save to variable
+                    string query = "select max(order_item_id) from customer_management.order_item;";
+                    MySqlDataReader DR;
+                    DR = con.ExecuteReader(query);
+                    if (DR.HasRows)
+                    {   // enter the order item id and order id into the order_items table
+                        while (DR.Read())
+                        {
+                            orderitemid = DR["max(order_item_id)"].ToString();
+                            string query3 = "Insert into order_items (order_id, order_item_id) values ('" + orderid + "','" + orderitemid + "');";
+                            cmd.CommandText = query3;
+                            result = cmd.ExecuteNonQuery();
+                        }
+                    }
                 }
                 string query4 = "Insert into customer_orders (customer_id, order_id) values ('" + userId + "','" + orderid + "')";
                 cmd = new MySqlCommand();
@@ -203,6 +214,11 @@ namespace CustomerManagementSystem.Orders
                     MessageBox.Show("Your order has been sucessfully processed!", "Thank you!");
                     databaseConnection.Close();
                 }
+                con.Close();
+                desc.Clear();
+                price.Clear();
+                id.Clear();
+                qty.Clear();
             }
             catch (Exception a)
             {
@@ -212,15 +228,10 @@ namespace CustomerManagementSystem.Orders
         public void Orderlist(Form PP)
         {
             // displays all items in the cart on the cart page, including name, price and quantitiy
-            
             int x = 100;
             int y = 0;
             double Unittotal = 0;
-            
-            List<string> desc = PaymentFactory.descList;
-            List<double> price = PaymentFactory.priceList;
-            List<string> id = PaymentFactory.idList;
-            List<int> qty = PaymentFactory.qtyList;
+            total = 0;
             
             for (int i = 0; i < desc.Count; i++)
             {
@@ -265,84 +276,6 @@ namespace CustomerManagementSystem.Orders
                 x += 20;
                 total += Unittotal;
             }
-
-
-
-            /*
-            string id;
-            string prodid;
-            string description;
-            string price;
-            string qty;
-            double Unittotal;
-            MySqlConnectionString = con.connectionString();
-            MySqlConnection mySqlConnection = new MySqlConnection(MySqlConnectionString);
-            MySqlCommand cmd = new MySqlCommand(query, mySqlConnection);
-            DataTable dt = new DataTable();
-            try
-            {
-                mySqlConnection.Open();
-                dt.Load(cmd.ExecuteReader());
-                foreach (DataRow dr in dt.Rows)
-                {
-                    counter += 1;
-                    id = dr["order_item_id"].ToString();
-                    prodid = dr["product_id"].ToString();
-                    description = dr["description"].ToString();
-                    price = dr["price"].ToString();
-                    qty = dr["quantity"].ToString();
-                    Unittotal = Convert.ToDouble(price) * Convert.ToInt32(qty);
-                    var ID = new Label()
-                    {
-                        Name = "id" + id,
-                        Text = prodid,
-                        Location = new Point(y + 45, x),
-                        Height = 20,
-                        Width = 20,
-                    };
-                    PP.Controls.Add(ID);
-                    var title = new Label()
-                    {
-                        Name = "title" + id,
-                        Text = description,
-                        Location = new Point(y + 70, x),
-                        Height = 20,
-                        Width = 350,
-                    };
-                    PP.Controls.Add(title);
-                    var qtylabel = new Label()
-                    {
-                        Name = id,
-                        Text = qty,
-                        Location = new Point(y + 520, x),
-                        Height = 20,
-                        Width = 50,
-                    };
-                    PP.Controls.Add(qtylabel);
-                    var UnitTlabel = new Label()
-                    {
-                        Name = "unittotal",
-                        Text = Convert.ToString(Unittotal),
-                        Location = new Point(y + 680, x),
-                        Height = 20,
-                        Width = 50
-                    };
-                    PP.Controls.Add(UnitTlabel);
-                    y = 0;
-                    x += 20;
-                    total += Unittotal;
-                }
-                if (counter == 0)
-                {
-                    return;
-                }
-                mySqlConnection.Close();
-            }
-            catch (Exception a)
-            {
-                MessageBox.Show("Query error " + a.Message);
-            }
-            */
         }
     }
 }
