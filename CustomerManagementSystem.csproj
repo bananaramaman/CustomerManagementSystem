@@ -270,6 +270,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AdminFactory.cs" />
     <Compile Include="CartPage.cs">
       <SubType>Form</SubType>
     </Compile>
