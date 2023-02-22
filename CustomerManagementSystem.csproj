@@ -402,9 +402,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\0cc.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Images\0cc.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
