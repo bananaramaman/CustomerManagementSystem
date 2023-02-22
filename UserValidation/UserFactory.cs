@@ -14,8 +14,6 @@ namespace CustomerManagementSystem.UserValidation
 {
     class UserFactory
     {
-        Signup SU = new Signup();
-        MenuBar MB = new MenuBar();
         Connection con = new Connection();
         public string MySqlConnectionString;
         public static string discid;
@@ -65,6 +63,7 @@ namespace CustomerManagementSystem.UserValidation
                             id = myReader.GetString(0);
                         }
                         con.Close();
+                        MenuBar MB = new MenuBar();
                         MB.StartPosition = FormStartPosition.WindowsDefaultLocation;
                         MB.ShowDialog();
                     }
@@ -109,6 +108,7 @@ namespace CustomerManagementSystem.UserValidation
                     {
                         MessageBox.Show("Your account has been sucessfully created!", "Welcome!");
                         databaseConnection.Close();
+                        Signup SU = new Signup();
                         SU.Close();
                     }
                 }
@@ -122,18 +122,17 @@ namespace CustomerManagementSystem.UserValidation
         // User profile page. Display all current and previous orders
         public void UserProfile(Form UP)
         {
-            int x = 100;
-            int y = 400;
+            int x = 150;
+            int y = 30;
             int counter = 0;
             string orderitemid;
             string desc;
             string price;
             string prodid;
             string qty;
-
-            string query1 = "SELECT orders.order_id, discount_id, total, created_date, completed_date, active " +
-                "FROM orders, customer_orders, order_items, order_item where customer_orders.order_id = orders.order_id and order_item.order_item_id = order_items.order_item_id " +
-                   "and order_items.order_id = orders.order_id and customer_orders.customer_id = '"+userId+"'";
+            string query1 = "SELECT orders.order_id, discount.discount_amount, orders.total, orders.created_date, orders.completed_date, active " +
+                "FROM orders, customer_orders, discount where customer_orders.customer_id = '" + userId + "' and orders.order_id = customer_orders.order_id and orders.discount_id = discount.discount_id;";
+            
             MySqlConnectionString = con.connectionString();
             MySqlConnection mySqlConnection = new MySqlConnection(MySqlConnectionString);
             MySqlCommand cmd = new MySqlCommand(query1, mySqlConnection);
@@ -142,52 +141,67 @@ namespace CustomerManagementSystem.UserValidation
             {
                 mySqlConnection.Open();
                 dt.Load(cmd.ExecuteReader());
-
                 foreach (DataRow dr in dt.Rows)
                 {
                     counter += 1;
                     orderN = dr["order_id"].ToString();
-                    discid = dr["discount_id"].ToString();
+                    discid = dr["discount_amount"].ToString();
                     total = dr["total"].ToString();
                     created = dr["created_date"].ToString();
                     active = dr["active"].ToString();
-                    var ID = new Label()
-                    {
-                        Name = "id",
-                        Text = "order id = " + id,
-                        Location = new Point(y, x),
-                        Height = 20,
-                        Width = 20,
-                    };
+                    var ID = new Label(){
+                        Name = "id",Text = "Order# : "+orderN,Location = new Point(y, x),Height = 20,Width = 75, BackColor = Color.Red, ForeColor = Color.White,};
                     UP.Controls.Add(ID);
-                    var discount = new Label()
-                    {
-                        Name = "discount",
-                        Text = "discount ID = " + discid,
-                        Location = new Point(y + 50, x),
-                        Height = 20,
-                        Width = 350,
-                    };
-                    UP.Controls.Add(discount);
-                    var create = new Label()
-                    {
-                        Name = "createddate",
-                        Text = "order date: " + created,
-                        Location = new Point(y + 100, x),
-                        Height = 20,
-                        Width = 50,
-                    };
+                    var create = new Label(){
+                        Name = "createddate",Text = "Order Date: "+created, Location = new Point(y + 75, x),Height = 20,Width = 350,BackColor = Color.Red, ForeColor = Color.White, };
                     UP.Controls.Add(create);
-                    var totalprice = new Label()
-                    {
-                        Name = "total",
-                        Text = "total $" + total,
-                        Location = new Point(y + 100, x),
-                        Height = 20,
-                        Width = 50,
-                    };
+                    var discount = new Label(){
+                        Name = "discount", Text = "Discount %"+discid,Location = new Point(y + 425, x),Height = 20,Width = 200,BackColor = Color.Red, ForeColor = Color.White,};
+                    UP.Controls.Add(discount);
+                    var totalprice = new Label(){
+                        Name = "total",Text = "Total $" + total, Location = new Point(y + 625, x), Height = 20, Width = 100, BackColor = Color.Red, ForeColor = Color.White, };
                     UP.Controls.Add(totalprice);
-                    y = 0;
+                    x += 22;
+                    y = 30;
+
+                    string query2 = "SELECT order_item.order_item_id, order_item.description, order_item.price, order_item.product_id, order_item.quantity " +
+                       "FROM order_item, order_items, orders where orders.order_id = '" + orderN + "' and order_item.order_item_id = order_items.order_item_id and order_items.order_id = orders.order_id;";
+                    MySqlCommand CMD = new MySqlCommand(query2, mySqlConnection);
+                    DataTable DT = new DataTable();
+                    try
+                    {
+                        DT.Load(CMD.ExecuteReader());
+                        foreach (DataRow row in DT.Rows)
+                        {
+                            orderitemid = row["order_item_id"].ToString();
+                            desc = row["description"].ToString();
+                            price = row["price"].ToString();
+                            prodid = row["product_id"].ToString();
+                            qty = row["quantity"].ToString();
+
+                            var itemord = new Label(){
+                                Name = "orderitem",Text = orderitemid,Location = new Point(y + 0, x),Height = 20,Width = 50, Visible = false,};
+                            UP.Controls.Add(itemord);
+                            var productid = new Label(){
+                                Name = "productid",Text = "SKU# : "+prodid,Location = new Point(y + 10, x),Height = 20, Width = 65,};
+                            UP.Controls.Add(productid);
+                            var description = new Label(){
+                                Name = "description",Text = desc,Location = new Point(y + 80, x),Height = 20, Width = 350, };
+                            UP.Controls.Add(description);
+                            var prodprice = new Label(){
+                                Name = "price",Text = "price $" + price,Location = new Point(y + 435, x),Height = 20, Width = 100,};
+                            UP.Controls.Add(prodprice);
+                            var prodqty = new Label(){
+                                Name = "quantity", Text = "QTY: "+qty,Location = new Point(y + 540, x),Height = 20, Width = 75,};
+                            UP.Controls.Add(prodqty);
+                            x += 22;
+                            y = 30;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Query error " + ex.Message);
+                    }
                     x += 20;
                 }
                 if (counter == 0)
@@ -205,67 +219,3 @@ namespace CustomerManagementSystem.UserValidation
         }
     }
 }
-
-/*
- string query2 = "Select order_item.order_item_id, order_item.description, order_item.price, order_item.product_id, order_item.quantity FROM orders, customer_orders, order_items, order_item " +
-                   "where customer_orders.order_id = orders.order_id and order_item.order_item_id = order_items.order_item_id and " +
-                   "order_items.order_id = orders.order_id and customer_orders.customer_id = '" + userId + "' and orders.order_id = '" + orderN + "'; ";
-                    con.Open();
-                    cmd.CommandText = query2;
-                    dt.Load(cmd.ExecuteReader());
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        orderitemid = row["order_item_id"].ToString();
-                        desc = row["description"].ToString();
-                        price = row["price"].ToString();
-                        prodid = row["product_id"].ToString();
-                        qty = row["quantity"].ToString();
-
-                        var itemord = new Label()
-                        {
-                            Name = "orderitem",
-                            Text = orderitemid,
-                            Location = new Point(y + 0, x),
-                            Height = 20,
-                            Width = 50
-                        };
-                        var productid = new Label()
-                        {
-                            Name = "productid",
-                            Text = prodid,
-                            Location = new Point(y + 50, x),
-                            Height = 20,
-                            Width = 50
-                        };
-                        var description = new Label()
-                        {
-                            Name = "description",
-                            Text = desc,
-                            Location = new Point(y + 100, x),
-                            Height = 20,
-                            Width = 50
-                        };
-                        var prodprice = new Label()
-                        {
-                            Name = "price",
-                            Text = "$"+price,
-                            Location = new Point(y + 250, x),
-                            Height = 20,
-                            Width = 50
-                        };
-                        var prodqty = new Label()
-                        {
-                            Name = "quantity",
-                            Text = qty,
-                            Location = new Point(y + 300, x),
-                            Height = 20,
-                            Width = 50
-                        };
-                        UP.Controls.Add(itemord);
-                        UP.Controls.Add(productid);
-                        UP.Controls.Add(description);
-                        UP.Controls.Add(prodprice);
-                        UP.Controls.Add(prodqty);
-                        x += 20;
-                    }
-*/
