@@ -12,6 +12,7 @@ using System.Net;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using CustomerManagementSystem.Products;
+using CustomerManagementSystem.UserValidation;
 
 namespace CustomerManagementSystem
 {
@@ -20,6 +21,7 @@ namespace CustomerManagementSystem
         ProductFactory PF = new ProductFactory();
         public int x = 0;
         public string y;
+        public static string userAdmin = UserFactory.admin;
 
         public MenuBar()
         {
@@ -32,6 +34,10 @@ namespace CustomerManagementSystem
         {
             //Loads the default panel (Homepage) displays all products
             PF.HomePage(x, y);
+            if (userAdmin == "Y")
+            {
+                button5.Visible = true;
+            }
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

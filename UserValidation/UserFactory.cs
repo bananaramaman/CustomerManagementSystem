@@ -24,6 +24,7 @@ namespace CustomerManagementSystem.UserValidation
         public static string fname;
         public static string lname;
         public static string orderN;
+        public static string admin;
         public static string userId 
         { 
             get { return id; }
@@ -60,9 +61,14 @@ namespace CustomerManagementSystem.UserValidation
                             lname = myReader.GetString(2);
                             string em = myReader.GetString(3);
                             string pass = myReader.GetString(11);
+                            admin = myReader.GetString(12);
                             id = myReader.GetString(0);
                         }
                         con.Close();
+                        if (admin == "Y")
+                        {
+
+                        }
                         MenuBar MB = new MenuBar();
                         MB.StartPosition = FormStartPosition.WindowsDefaultLocation;
                         MB.ShowDialog();
