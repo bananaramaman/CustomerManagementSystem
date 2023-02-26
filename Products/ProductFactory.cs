@@ -56,6 +56,17 @@ namespace CustomerManagementSystem.Products
             };
             MB.Controls.Add(panel);
         }
+        //Logout/quit app
+        public void quit()
+        {
+            System.Windows.Forms.Application.Exit();
+        }
+        // shows Admin control window
+        public void admin()
+        {
+            AdminBar AB = new AdminBar();
+            AB.Show();
+        }
         // displays the user shopping cart
         public void shopCart()
         {
@@ -108,7 +119,6 @@ namespace CustomerManagementSystem.Products
                         panel.Controls.Add(PV);
                         OpenChildForm(PV);
                     }
-                    
                 }
                 else{
                     MessageBox.Show("Connection Error!", "Database Information");}

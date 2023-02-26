@@ -270,6 +270,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminProduct.Designer.cs">
+      <DependentUpon>AdminProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminOrder.Designer.cs">
+      <DependentUpon>AdminOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminUser.Designer.cs">
+      <DependentUpon>AdminUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Admin\AdminFactory.cs" />
     <Compile Include="CartPage.cs">
       <SubType>Form</SubType>
@@ -289,6 +307,12 @@
     </Compile>
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminBar.Designer.cs">
+      <DependentUpon>AdminBar.cs</DependentUpon>
     </Compile>
     <Compile Include="MenuBar.cs">
       <SubType>Form</SubType>
@@ -326,6 +350,15 @@
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
     <Compile Include="UserValidation\UserFactory.cs" />
+    <EmbeddedResource Include="AdminProduct.resx">
+      <DependentUpon>AdminProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminOrder.resx">
+      <DependentUpon>AdminOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminUser.resx">
+      <DependentUpon>AdminUser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CartPage.resx">
       <DependentUpon>CartPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -334,6 +367,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminBar.resx">
+      <DependentUpon>AdminBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuBar.resx">
       <DependentUpon>MenuBar.cs</DependentUpon>
