@@ -47,7 +47,7 @@ namespace CustomerManagementSystem
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SoundPlayer simpleSound = new SoundPlayer(@"C:\Users\DJBur\Documents\CustomerManagement\CustomerManagementSystem\Audio\Pain.wav");
+            SoundPlayer simpleSound = new SoundPlayer(@"C:\Users\User\Documents\CustomerManagementSystem\Audio\Pain.wav");
             simpleSound.Play();
         }
 
