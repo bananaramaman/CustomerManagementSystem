@@ -76,11 +76,5 @@ namespace CustomerManagementSystem
             textBox1.Clear();
             PF.HomePage(x, text);
         }
-
-        private void button5_Click(object sender, EventArgs e)
-        {   // loads the admin control panel
-            this.Close();
-            PF.admin();
-        }
     }
 }
