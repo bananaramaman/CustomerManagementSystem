@@ -50,7 +50,6 @@ namespace CustomerManagementSystem
             AdminBar ab = new AdminBar();
             ab.back();
         }
-
         private void button4_Click(object sender, EventArgs e)
         {   //refresh the page clearing textboxes and labels
             this.Controls.Clear();
@@ -64,7 +63,6 @@ namespace CustomerManagementSystem
             }
             userRes.Clear();
         }
-
         private void button1_Click(object sender, EventArgs e)
         {   //removes user from Database
             string query = "Delete from customer where customer_id = '" + userID + "'";
@@ -76,7 +74,6 @@ namespace CustomerManagementSystem
             }
             else return;    
         }
-
         private void button2_Click(object sender, EventArgs e)
         {   // updates existing user details
             int UserID = Convert.ToInt32(userID);
@@ -86,7 +83,6 @@ namespace CustomerManagementSystem
             AdminFactory AF = new AdminFactory();
             AF.updateRec(query);
         }
-
         private void button5_Click(object sender, EventArgs e)
         {   //populates form with chosen user details
             string orderinfo = comboBox5.Text;
@@ -109,7 +105,6 @@ namespace CustomerManagementSystem
             textBox7.Text = AF.pass;
             comboBox2.Text = AF.adminYN;
         }
-
         private void button6_Click(object sender, EventArgs e)
         {   //show password 
             textBox7.UseSystemPasswordChar = false;
